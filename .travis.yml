@@ -2,7 +2,15 @@ arch:
   - amd64
   - ppc64le
 language: ruby
-services:
-  - docker
-before_install:
-  - docker run -it linuxbrew/linuxbrew
+matrix:
+  include:
+    - arch: amd64
+      services:
+        - docker
+      before_install:
+        - docker build -t linuxbrew-centos7 https://raw.githubusercontent.com/Linuxbrew/docker/master/centos7/Dockerfile
+    - arch: ppc64le
+      services:
+        - docker
+      before_install:
+        - docker pull ppc64le/centos:7
